@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профессионалы Ростова</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8fdf9;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+            .nav-tab.active {
+                background-color: #4caf50;
+                color: white;
+            }
+
+            .nav-tab:hover:not(.active) {
+                background-color: #e8f5e9;
+            }
+
+        .profile-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Page Container */
+        .page-container {
+            display: none;
+            padding: 15px;
+            min-height: calc(100vh - 60px);
+        }
+
+            .page-container.active {
+                display: block;
+            }
+
+        /* Main Page Styles */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            }
+
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .specialty {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .star {
+            color: #f39c12;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            display: none;
+        }
+
+            .schedule-table.active {
+                display: table;
+            }
+
+            .schedule-table th, .schedule-table td {
+                border: 1px solid #e0e0e0;
+                padding: 6px;
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .schedule-table th {
+                background-color: #f1f8e9;
+            }
+
+        .book-btn {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+            .book-btn:hover {
+                background-color: #388e3c;
+            }
+
+        .show-schedule-btn {
+            background-color: #e8f5e9;
+            color: #4caf50;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Search Page Styles */
+        #map-container {
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .search-bar {
+            display: flex;
+            margin-top: 20px;
+            position: sticky;
+            bottom: 15px;
+            background-color: #f8fdf9;
+            padding: 10px 0;
+        }
+
+            .search-bar input {
+                flex: 1;
+                padding: 12px 15px;
+                border: 1px solid #ddd;
+                border-radius: 25px 0 0 25px;
+                font-size: 16px;
+                outline: none;
+                background-color: white;
+            }
+
+            .search-bar button {
+                padding: 12px 20px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                border-radius: 0 25px 25px 0;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+        .specialist-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            display: none;
+            position: relative;
+        }
+
+            .specialist-card.active {
+                display: block;
+            }
+
+        .close-card-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #7f8c8d;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .close-card-btn:hover {
+                background-color: #f5f5f5;
+            }
+
+        /* Profile Panel */
+        .profile-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 350px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+            .profile-panel.active {
+                right: 0;
+            }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .profile-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .profile-menu-item {
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #f1f8e9;
+        }
+
+            .profile-menu-item:hover {
+                background-color: #e8f5e9;
+            }
+
+        /* Development Message */
+        .development-message {
+            text-align: center;
+            padding: 50px 20px;
+            color: #7f8c8d;
+            font-size: 18px;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+            .overlay.active {
+                display: block;
+            }
+
+        /* Horizontal Schedule */
+        .horizontal-schedule {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            margin: 15px 0;
+            padding-bottom: 10px;
+            display: none;
+        }
+
+            .horizontal-schedule.active {
+                display: flex;
+            }
+
+        .schedule-item {
+            min-width: 120px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #f1f8e9;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .schedule-day {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .schedule-time {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                gap: 5px;
+            }
+
+            .nav-tab {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            #map-container {
+                height: 300px;
+            }
+
+            .profile-panel {
+                width: 85%;
+            }
+
+            .schedule-table th, .schedule-table td {
+                padding: 4px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-tab {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .profile-panel {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">п</div>
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-page="main">Главная</div>
+            <div class="nav-tab" data-page="search">Поиск</div>
+            <div class="nav-tab" data-page="appointments">Записи</div>
+            <div class="nav-tab" data-page="favorites">Избранные</div>
+        </div>
+        <div class="profile-btn" id="profileBtn">К</div>
+    </header>
+
+    <!-- Main Page -->
+    <div class="page-container active" id="main-page">
+        <h1>Специалисты</h1>
+        <div class="cards-container" id="cardsContainer">
+            <!-- Cards will be generated here -->
+        </div>
+    </div>
+
+    <!-- Search Page -->
+    <div class="page-container" id="search-page">
+        <h1>Поиск специалистов</h1>
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+        <div class="specialist-card" id="specialistCard">
+            <button class="close-card-btn" id="closeCardBtn">×</button>
+            <div class="card-header">
+                <div class="name" id="specialistName">Макар</div>
+                <div class="specialty" id="specialistSpecialty">IT специалист</div>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span id="specialistRating">5.0</span>
+                </div>
+            </div>
+            <h3>График работы</h3>
+            <div class="horizontal-schedule" id="horizontalSchedule">
+                <!-- Horizontal schedule will be added here -->
+            </div>
+            <button class="book-btn">Записаться</button>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Введите имя или специальность...">
+            <button>Поиск</button>
+        </div>
+    </div>
+
+    <!-- Appointments Page -->
+    <div class="page-container" id="appointments-page">
+        <div class="development-message">В разработке</div>
+    </div>
+
+    <!-- Favorites Page -->
+    <div class="page-container" id="favorites-page">
+        <div class="development-message">В разработке</div>
+    </div>
+
+    <!-- Profile Panel -->
+    <div class="profile-panel" id="profilePanel">
+        <div class="profile-header">
+            <div class="profile-avatar">К</div>
+            <div class="profile-name">Кирилл К.</div>
+        </div>
+        <div class="profile-menu">
+            <div class="profile-menu-item">Настройки</div>
+            <div class="profile-menu-item">Записи</div>
+            <div class="profile-menu-item">Поддержка</div>
+            <div class="profile-menu-item">Для исполнителя</div>
+        </div>
+    </div>
+
+    <!-- Overlay for profile panel -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Data for specialists
+        const specialists = [
+            {
+                id: 1,
+                name: "Макар",
+                specialty: "IT специалист",
+                rating: 5.0,
+                lat: 47.2225,
+                lng: 39.7185,
+                schedule: [
+                    { day: "Пн", time: "9:00-18:00" },
+                    { day: "Вт", time: "9:00-18:00" },
+                    { day: "Ср", time: "9:00-18:00" },
+                    { day: "Чт", time: "9:00-18:00" },
+                    { day: "Пт", time: "9:00-17:00" },
+                    { day: "Сб", time: "Выходной" },
+                    { day: "Вс", time: "Выходной" }
+                ]
+            },
+            {
+                id: 2,
+                name: "Анна",
+                specialty: "Дизайнер",
+                rating: 4.8,
+                lat: 47.2325,
+                lng: 39.7285,
+                schedule: [
+                    { day: "Пн", time: "10:00-19:00" },
+                    { day: "Вт", time: "10:00-19:00" },
+                    { day: "Ср", time: "10:00-19:00" },
+                    { day: "Чт", time: "10:00-19:00" },
+                    { day: "Пт", time: "10:00-18:00" },
+                    { day: "Сб", time: "11:00-15:00" },
+                    { day: "Вс", time: "Выходной" }
+                ]
+            },
+            {
+                id: 3,
+                name: "Дмитрий",
+                specialty: "Маркетолог",
+                rating: 4.9,
+                lat: 47.2125,
+                lng: 39.7085,
+                schedule: [
+                    { day: "Пн", time: "8:00-17:00" },
+                    { day: "Вт", time: "8:00-17:00" },
+                    { day: "Ср", time: "8:00-17:00" },
+                    { day: "Чт", time: "8:00-17:00" },
+                    { day: "Пт", time: "8:00-16:00" },
+                    { day: "Сб", time: "Выходной" },
+                    { day: "Вс", time: "Выходной" }
+                ]
+            },
+            {
+                id: 4,
+                name: "Ольга",
+                specialty: "Юрист",
+                rating: 4.7,
+                lat: 47.2425,
+                lng: 39.7385,
+                schedule: [
+                    { day: "Пн", time: "9:00-18:00" },
+                    { day: "Вт", time: "9:00-18:00" },
+                    { day: "Ср", time: "9:00-18:00" },
+                    { day: "Чт", time: "9:00-18:00" },
+                    { day: "Пт", time: "9:00-17:00" },
+                    { day: "Сб", time: "10:00-14:00" },
+                    { day: "Вс", time: "Выходной" }
+                ]
+            }
+        ];
+
+        // Initialize the map
+        let map;
+        let markers = [];
+
+        function initMap() {
+            // Set initial view to Rostov-on-Don
+            map = L.map('map', {
+                zoomControl: false, // Remove default zoom control
+                attributionControl: false // Remove attribution
+            }).setView([47.2225, 39.7185], 13);
+
+            // Add tile layer (OpenStreetMap) with custom style to hide Ukrainian flag
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18
+            }).addTo(map);
+
+            // Add custom zoom control
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(map);
+
+            // Add markers for specialists
+            specialists.forEach(specialist => {
+                const marker = L.marker([specialist.lat, specialist.lng])
+                    .addTo(map)
+                    .bindPopup(`<b>${specialist.name}</b><br>${specialist.specialty}<br>Рейтинг: ${specialist.rating}`);
+
+                marker.on('click', function () {
+                    showSpecialistCard(specialist);
+                });
+
+                markers.push(marker);
+            });
+        }
+
+        // Show specialist card when marker is clicked
+        function showSpecialistCard(specialist) {
+            const card = document.getElementById('specialistCard');
+            const name = document.getElementById('specialistName');
+            const specialty = document.getElementById('specialistSpecialty');
+            const rating = document.getElementById('specialistRating');
+            const horizontalSchedule = document.getElementById('horizontalSchedule');
+
+            name.textContent = specialist.name;
+            specialty.textContent = specialist.specialty;
+            rating.textContent = specialist.rating;
+
+            // Clear existing schedule
+            horizontalSchedule.innerHTML = '';
+
+            // Add schedule items
+            specialist.schedule.forEach(item => {
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                scheduleItem.innerHTML = `
+                        <div class="schedule-day">${item.day}</div>
+                        <div class="schedule-time">${item.time}</div>
+                    `;
+                horizontalSchedule.appendChild(scheduleItem);
+            });
+
+            horizontalSchedule.classList.add('active');
+            card.classList.add('active');
+        }
+
+        // Close specialist card
+        function closeSpecialistCard() {
+            const card = document.getElementById('specialistCard');
+            card.classList.remove('active');
+        }
+
+        // Generate cards for main page
+        function generateCards() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+
+            specialists.forEach(specialist => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                        <div class="card-header">
+                            <div class="name">${specialist.name}</div>
+                            <div class="specialty">${specialist.specialty}</div>
+                            <div class="rating">
+                                <span class="star">★</span>
+                                <span>${specialist.rating}</span>
+                            </div>
+                        </div>
+                        <button class="show-schedule-btn" data-id="${specialist.id}">Показать расписание</button>
+                        <div class="horizontal-schedule" id="schedule-${specialist.id}">
+                            <!-- Schedule will be added here -->
+                        </div>
+                        <button class="book-btn" data-id="${specialist.id}">Записаться</button>
+                    `;
+                container.appendChild(card);
+
+                // Add schedule to the card
+                const scheduleContainer = document.getElementById(`schedule-${specialist.id}`);
+                specialist.schedule.forEach(item => {
+                    const scheduleItem = document.createElement('div');
+                    scheduleItem.className = 'schedule-item';
+                    scheduleItem.innerHTML = `
+                            <div class="schedule-day">${item.day}</div>
+                            <div class="schedule-time">${item.time}</div>
+                        `;
+                    scheduleContainer.appendChild(scheduleItem);
+                });
+            });
+
+            // Add event listeners to show schedule buttons
+            document.querySelectorAll('.show-schedule-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const specialistId = this.getAttribute('data-id');
+                    const schedule = document.getElementById(`schedule-${specialistId}`);
+                    schedule.classList.toggle('active');
+                    this.textContent = schedule.classList.contains('active') ? 'Скрыть расписание' : 'Показать расписание';
+                });
+            });
+
+            // Add event listeners to book buttons
+            document.querySelectorAll('.book-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const specialistId = this.getAttribute('data-id');
+                    const specialist = specialists.find(s => s.id == specialistId);
+                    alert(`Запись к ${specialist.name} (${specialist.specialty}) успешно оформлена!`);
+                });
+            });
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Update active tab
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                // Show corresponding page
+                const pageId = this.getAttribute('data-page') + '-page';
+                document.querySelectorAll('.page-container').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+
+                // Initialize map if on search page
+                if (pageId === 'search-page' && !map) {
+                    initMap();
+                }
+
+                // Close specialist card when leaving search page
+                if (pageId !== 'search-page') {
+                    closeSpecialistCard();
+                }
+            });
+        });
+
+        // Profile panel functionality
+        const profileBtn = document.getElementById('profileBtn');
+        const profilePanel = document.getElementById('profilePanel');
+        const overlay = document.getElementById('overlay');
+
+        profileBtn.addEventListener('click', function () {
+            profilePanel.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        overlay.addEventListener('click', function () {
+            profilePanel.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Close card button functionality
+        const closeCardBtn = document.getElementById('closeCardBtn');
+        closeCardBtn.addEventListener('click', closeSpecialistCard);
+
+        // Close card when clicking on specialist name (alternative method)
+        document.getElementById('specialistName').addEventListener('click', closeSpecialistCard);
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            generateCards();
+        });
+    </script>
+</body>
+</html>
