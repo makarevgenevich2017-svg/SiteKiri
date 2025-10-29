@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профессионалы Ростова</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -69,14 +70,14 @@
             flex-shrink: 0;
         }
 
-            .nav-tab.active {
-                background-color: #4caf50;
-                color: white;
-            }
+        .nav-tab.active {
+            background-color: #4caf50;
+            color: white;
+        }
 
-            .nav-tab:hover:not(.active) {
-                background-color: #e8f5e9;
-            }
+        .nav-tab:hover:not(.active) {
+            background-color: #e8f5e9;
+        }
 
         .profile-btn {
             width: 36px;
@@ -102,9 +103,9 @@
             overflow-x: hidden;
         }
 
-            .page-container.active {
-                display: block;
-            }
+        .page-container.active {
+            display: block;
+        }
 
         /* Main Page Styles */
         .cards-container {
@@ -123,12 +124,13 @@
             transition: transform 0.3s, box-shadow 0.3s;
             width: 100%;
             overflow: hidden;
+            cursor: pointer;
         }
 
-            .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
 
         .card-header {
             display: flex;
@@ -173,11 +175,11 @@
             transition: background-color 0.3s;
         }
 
-            .book-btn:hover {
-                background-color: #388e3c;
-            }
+        .book-btn:hover {
+            background-color: #388e3c;
+        }
 
-        .show-schedule-btn {
+        .show-schedule-btn, .show-services-btn {
             background-color: #e8f5e9;
             color: #4caf50;
             border: none;
@@ -189,6 +191,22 @@
             width: 100%;
         }
 
+        .cancel-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background-color: #d32f2f;
+        }
+
         /* Horizontal Schedule - FIXED */
         .horizontal-schedule-container {
             width: 100%;
@@ -197,9 +215,9 @@
             display: none;
         }
 
-            .horizontal-schedule-container.active {
-                display: block;
-            }
+        .horizontal-schedule-container.active {
+            display: block;
+        }
 
         .horizontal-schedule {
             display: flex;
@@ -212,23 +230,23 @@
             -webkit-overflow-scrolling: touch;
         }
 
-            .horizontal-schedule::-webkit-scrollbar {
-                height: 6px;
-            }
+        .horizontal-schedule::-webkit-scrollbar {
+            height: 6px;
+        }
 
-            .horizontal-schedule::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 3px;
-            }
+        .horizontal-schedule::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
 
-            .horizontal-schedule::-webkit-scrollbar-thumb {
-                background: #c1c1c1;
-                border-radius: 3px;
-            }
+        .horizontal-schedule::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
 
-                .horizontal-schedule::-webkit-scrollbar-thumb:hover {
-                    background: #a8a8a8;
-                }
+        .horizontal-schedule::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
 
         .schedule-item {
             min-width: 100px;
@@ -275,27 +293,27 @@
             width: 100%;
         }
 
-            .search-bar input {
-                flex: 1;
-                padding: 12px 15px;
-                border: 1px solid #ddd;
-                border-radius: 25px 0 0 25px;
-                font-size: 16px;
-                outline: none;
-                background-color: white;
-                min-width: 0;
-            }
+        .search-bar input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px 0 0 25px;
+            font-size: 16px;
+            outline: none;
+            background-color: white;
+            min-width: 0;
+        }
 
-            .search-bar button {
-                padding: 12px 20px;
-                background-color: #4caf50;
-                color: white;
-                border: none;
-                border-radius: 0 25px 25px 0;
-                cursor: pointer;
-                font-weight: bold;
-                flex-shrink: 0;
-            }
+        .search-bar button {
+            padding: 12px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
 
         .specialist-card {
             background-color: white;
@@ -308,9 +326,9 @@
             width: 100%;
         }
 
-            .specialist-card.active {
-                display: block;
-            }
+        .specialist-card.active {
+            display: block;
+        }
 
         .close-card-btn {
             position: absolute;
@@ -329,9 +347,241 @@
             justify-content: center;
         }
 
-            .close-card-btn:hover {
-                background-color: #f5f5f5;
-            }
+        .close-card-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Services Section */
+        .services-section {
+            margin: 20px 0;
+            display: none;
+        }
+
+        .services-section.active {
+            display: block;
+        }
+
+        .services-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .service-card {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .service-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .service-price {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Booking Modal */
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .booking-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .time-slot {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot.selected {
+            background-color: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .time-slot.disabled {
+            background-color: #f5f5f5;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .confirm-booking {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .day-off-message {
+            color: #f44336;
+            text-align: center;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        /* Appointments Page */
+        .appointments-list {
+            margin-top: 20px;
+        }
+
+        .appointment-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .appointment-specialist {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .appointment-service {
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .appointment-time {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .countdown {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #4caf50;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
 
         /* Profile Panel */
         .profile-panel {
@@ -349,9 +599,9 @@
             overflow-y: auto;
         }
 
-            .profile-panel.active {
-                right: 0;
-            }
+        .profile-panel.active {
+            right: 0;
+        }
 
         .profile-header {
             display: flex;
@@ -394,9 +644,9 @@
             background-color: #f1f8e9;
         }
 
-            .profile-menu-item:hover {
-                background-color: #e8f5e9;
-            }
+        .profile-menu-item:hover {
+            background-color: #e8f5e9;
+        }
 
         /* Development Message */
         .development-message {
@@ -418,9 +668,9 @@
             display: none;
         }
 
-            .overlay.active {
-                display: block;
-            }
+        .overlay.active {
+            display: block;
+        }
 
         /* Mobile-specific styles */
         @media (max-width: 768px) {
@@ -428,35 +678,43 @@
                 gap: 5px;
                 max-width: calc(100vw - 70px);
             }
-
+            
             .nav-tab {
                 padding: 8px 10px;
                 font-size: 13px;
             }
-
+            
             .cards-container {
                 grid-template-columns: 1fr;
             }
-
+            
             #map-container {
                 height: 300px;
             }
-
+            
             .profile-panel {
                 width: 85%;
             }
-
+            
             .schedule-item {
                 min-width: 90px;
                 padding: 8px;
             }
-
+            
             .schedule-day {
                 font-size: 13px;
             }
-
+            
             .schedule-time {
                 font-size: 11px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -465,17 +723,25 @@
                 padding: 6px 8px;
                 font-size: 12px;
             }
-
+            
             .card {
                 padding: 15px;
             }
-
+            
             .profile-panel {
                 width: 90%;
             }
-
+            
             .schedule-item {
                 min-width: 85px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .time-slots {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -483,6 +749,31 @@
         html, body {
             overflow-x: hidden;
             max-width: 100%;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-btn {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background-color: white;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active {
+            background-color: #4caf50;
+            color: white;
+            border-color: #4caf50;
         }
     </style>
 </head>
@@ -502,6 +793,14 @@
     <!-- Main Page -->
     <div class="page-container active" id="main-page">
         <h1>Специалисты</h1>
+        <div class="category-filter" id="categoryFilter">
+            <button class="category-btn active" data-category="all">Все</button>
+            <button class="category-btn" data-category="cleaning">Клининг</button>
+            <button class="category-btn" data-category="cooking">Повара</button>
+            <button class="category-btn" data-category="beauty">Парикмахеры</button>
+            <button class="category-btn" data-category="design">Дизайнеры</button>
+            <button class="category-btn" data-category="companies">Компании</button>
+        </div>
         <div class="cards-container" id="cardsContainer">
             <!-- Cards will be generated here -->
         </div>
@@ -523,13 +822,23 @@
                     <span id="specialistRating">5.0</span>
                 </div>
             </div>
+            
+            <button class="show-services-btn" id="showServicesBtn">Показать услуги</button>
+            
+            <div class="services-section" id="servicesSection">
+                <h3 class="services-title">Услуги</h3>
+                <div class="services-grid" id="servicesGrid">
+                    <!-- Services will be added here -->
+                </div>
+            </div>
+            
             <h3>График работы</h3>
             <div class="horizontal-schedule-container active" id="horizontalScheduleContainer">
                 <div class="horizontal-schedule" id="horizontalSchedule">
                     <!-- Horizontal schedule will be added here -->
                 </div>
             </div>
-            <button class="book-btn">Записаться</button>
+            <button class="book-btn" id="openBookingBtn">Записаться</button>
         </div>
         <div class="search-bar">
             <input type="text" placeholder="Введите имя или специальность...">
@@ -539,12 +848,36 @@
 
     <!-- Appointments Page -->
     <div class="page-container" id="appointments-page">
-        <div class="development-message">В разработке</div>
+        <h1>Мои записи</h1>
+        <div class="appointments-list" id="appointmentsList">
+            <!-- Appointments will be added here -->
+        </div>
     </div>
 
     <!-- Favorites Page -->
     <div class="page-container" id="favorites-page">
         <div class="development-message">В разработке</div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Запись на услугу</h2>
+                <button class="close-modal" id="closeModalBtn">×</button>
+            </div>
+            <div id="bookingDetails">
+                <!-- Booking details will be added here -->
+            </div>
+            <div class="form-group">
+                <label for="bookingDate">Дата:</label>
+                <input type="date" id="bookingDate">
+            </div>
+            <div id="timeSelection">
+                <!-- Time slots or day off message will be added here -->
+            </div>
+            <button class="confirm-booking" id="confirmBookingBtn">Подтвердить запись</button>
+        </div>
     </div>
 
     <!-- Profile Panel -->
@@ -569,72 +902,142 @@
     <script>
         // Data for specialists
         const specialists = [
-            {
-                id: 1,
-                name: "Макар",
-                specialty: "IT специалист",
-                rating: 5.0,
-                lat: 47.2225,
+            { 
+                id: 1, 
+                name: "Макар", 
+                specialty: "IT специалист", 
+                rating: 5.0, 
+                lat: 47.2225, 
                 lng: 39.7185,
+                category: "design",
                 schedule: [
-                    { day: "Пн", time: "9:00-18:00" },
-                    { day: "Вт", time: "9:00-18:00" },
-                    { day: "Ср", time: "9:00-18:00" },
-                    { day: "Чт", time: "9:00-18:00" },
-                    { day: "Пт", time: "9:00-17:00" },
-                    { day: "Сб", time: "Выходной" },
-                    { day: "Вс", time: "Выходной" }
+                    { day: "Пн", time: "9:00-18:00", dayIndex: 1 },
+                    { day: "Вт", time: "9:00-18:00", dayIndex: 2 },
+                    { day: "Ср", time: "9:00-18:00", dayIndex: 3 },
+                    { day: "Чт", time: "9:00-18:00", dayIndex: 4 },
+                    { day: "Пт", time: "9:00-17:00", dayIndex: 5 },
+                    { day: "Сб", time: "Выходной", dayIndex: 6, isDayOff: true },
+                    { day: "Вс", time: "Выходной", dayIndex: 0, isDayOff: true }
+                ],
+                services: [
+                    { id: 1, name: "Создание сайта", price: 15000, duration: "5-7 дней", image: "🌐" },
+                    { id: 2, name: "Дизайн интерфейса", price: 8000, duration: "3-5 дней", image: "🎨" },
+                    { id: 3, name: "Техническая поддержка", price: 5000, duration: "1 день", image: "🔧" }
                 ]
             },
-            {
-                id: 2,
-                name: "Анна",
-                specialty: "Дизайнер",
-                rating: 4.8,
-                lat: 47.2325,
+            { 
+                id: 2, 
+                name: "Анна", 
+                specialty: "Дизайнер интерьеров", 
+                rating: 4.8, 
+                lat: 47.2325, 
                 lng: 39.7285,
+                category: "design",
                 schedule: [
-                    { day: "Пн", time: "10:00-19:00" },
-                    { day: "Вт", time: "10:00-19:00" },
-                    { day: "Ср", time: "10:00-19:00" },
-                    { day: "Чт", time: "10:00-19:00" },
-                    { day: "Пт", time: "10:00-18:00" },
-                    { day: "Сб", time: "11:00-15:00" },
-                    { day: "Вс", time: "Выходной" }
+                    { day: "Пн", time: "10:00-19:00", dayIndex: 1 },
+                    { day: "Вт", time: "10:00-19:00", dayIndex: 2 },
+                    { day: "Ср", time: "10:00-19:00", dayIndex: 3 },
+                    { day: "Чт", time: "10:00-19:00", dayIndex: 4 },
+                    { day: "Пт", time: "10:00-18:00", dayIndex: 5 },
+                    { day: "Сб", time: "11:00-15:00", dayIndex: 6 },
+                    { day: "Вс", time: "Выходной", dayIndex: 0, isDayOff: true }
+                ],
+                services: [
+                    { id: 1, name: "Дизайн квартиры", price: 25000, duration: "7-10 дней", image: "🏠" },
+                    { id: 2, name: "Дизайн кухни", price: 15000, duration: "3-5 дней", image: "🍳" },
+                    { id: 3, name: "Консультация", price: 3000, duration: "1-2 часа", image: "💬" }
                 ]
             },
-            {
-                id: 3,
-                name: "Дмитрий",
-                specialty: "Маркетолог",
-                rating: 4.9,
-                lat: 47.2125,
+            { 
+                id: 3, 
+                name: "Дмитрий", 
+                specialty: "Повар", 
+                rating: 4.9, 
+                lat: 47.2125, 
                 lng: 39.7085,
+                category: "cooking",
                 schedule: [
-                    { day: "Пн", time: "8:00-17:00" },
-                    { day: "Вт", time: "8:00-17:00" },
-                    { day: "Ср", time: "8:00-17:00" },
-                    { day: "Чт", time: "8:00-17:00" },
-                    { day: "Пт", time: "8:00-16:00" },
-                    { day: "Сб", time: "Выходной" },
-                    { day: "Вс", time: "Выходной" }
+                    { day: "Пн", time: "8:00-17:00", dayIndex: 1 },
+                    { day: "Вт", time: "8:00-17:00", dayIndex: 2 },
+                    { day: "Ср", time: "8:00-17:00", dayIndex: 3 },
+                    { day: "Чт", time: "8:00-17:00", dayIndex: 4 },
+                    { day: "Пт", time: "8:00-16:00", dayIndex: 5 },
+                    { day: "Сб", time: "Выходной", dayIndex: 6, isDayOff: true },
+                    { day: "Вс", time: "Выходной", dayIndex: 0, isDayOff: true }
+                ],
+                services: [
+                    { id: 1, name: "Приготовление ужина", price: 5000, duration: "3-4 часа", image: "🍽️" },
+                    { id: 2, name: "Кулинарный мастер-класс", price: 3000, duration: "2 часа", image: "👨‍🍳" },
+                    { id: 3, name: "Создание меню", price: 10000, duration: "2-3 дня", image: "📋" }
                 ]
             },
-            {
-                id: 4,
-                name: "Ольга",
-                specialty: "Юрист",
-                rating: 4.7,
-                lat: 47.2425,
+            { 
+                id: 4, 
+                name: "Ольга", 
+                specialty: "Клининг-менеджер", 
+                rating: 4.7, 
+                lat: 47.2425, 
                 lng: 39.7385,
+                category: "cleaning",
                 schedule: [
-                    { day: "Пн", time: "9:00-18:00" },
-                    { day: "Вт", time: "9:00-18:00" },
-                    { day: "Ср", time: "9:00-18:00" },
-                    { day: "Чт", time: "9:00-18:00" },
-                    { day: "Пт", time: "9:00-17:00" },
-                    { day: "Сб", time: "10:00-14:00" },
-                    { day: "Вс", time: "Выходной" }
+                    { day: "Пн", time: "9:00-18:00", dayIndex: 1 },
+                    { day: "Вт", time: "9:00-18:00", dayIndex: 2 },
+                    { day: "Ср", time: "9:00-18:00", dayIndex: 3 },
+                    { day: "Чт", time: "9:00-18:00", dayIndex: 4 },
+                    { day: "Пт", time: "9:00-17:00", dayIndex: 5 },
+                    { day: "Сб", time: "10:00-14:00", dayIndex: 6 },
+                    { day: "Вс", time: "Выходной", dayIndex: 0, isDayOff: true }
+                ],
+                services: [
+                    { id: 1, name: "Генеральная уборка", price: 5000, duration: "4-5 часов", image: "🧹" },
+                    { id: 2, name: "Ежедневная уборка", price: 2000, duration: "1-2 часа", image: "🏢" },
+                    { id: 3, name: "Химчистка мебели", price: 4000, duration: "2-3 часа", image: "🛋️" }
+                ]
+            },
+            { 
+                id: 5, 
+                name: "Елена", 
+                specialty: "Парикмахер", 
+                rating: 4.9, 
+                lat: 47.2525, 
+                lng: 39.7485,
+                category: "beauty",
+                schedule: [
+                    { day: "Пн", time: "9:00-19:00", dayIndex: 1 },
+                    { day: "Вт", time: "9:00-19:00", dayIndex: 2 },
+                    { day: "Ср", time: "9:00-19:00", dayIndex: 3 },
+                    { day: "Чт", time: "9:00-19:00", dayIndex: 4 },
+                    { day: "Пт", time: "9:00-19:00", dayIndex: 5 },
+                    { day: "Сб", time: "10:00-17:00", dayIndex: 6 },
+                    { day: "Вс", time: "10:00-15:00", dayIndex: 0 }
+                ],
+                services: [
+                    { id: 1, name: "Женская стрижка", price: 1500, duration: "1 час", image: "💇‍♀️" },
+                    { id: 2, name: "Мужская стрижка", price: 800, duration: "40 мин", image: "💇‍♂️" },
+                    { id: 3, name: "Окрашивание", price: 3000, duration: "2-3 часа", image: "🎨" }
+                ]
+            },
+            { 
+                id: 6, 
+                name: "Сергей", 
+                specialty: "Электрик", 
+                rating: 4.6, 
+                lat: 47.2625, 
+                lng: 39.7585,
+                category: "companies",
+                schedule: [
+                    { day: "Пн", time: "8:00-20:00", dayIndex: 1 },
+                    { day: "Вт", time: "8:00-20:00", dayIndex: 2 },
+                    { day: "Ср", time: "8:00-20:00", dayIndex: 3 },
+                    { day: "Чт", time: "8:00-20:00", dayIndex: 4 },
+                    { day: "Пт", time: "8:00-20:00", dayIndex: 5 },
+                    { day: "Сб", time: "9:00-18:00", dayIndex: 6 },
+                    { day: "Вс", time: "9:00-16:00", dayIndex: 0 }
+                ],
+                services: [
+                    { id: 1, name: "Установка розеток", price: 1000, duration: "1 час", image: "🔌" },
+                    { id: 2, name: "Замена проводки", price: 8000, duration: "1 день", image: "⚡" },
+                    { id: 3, name: "Консультация", price: 500, duration: "30 мин", image: "💬" }
                 ]
             }
         ];
@@ -642,6 +1045,9 @@
         // Initialize the map
         let map;
         let markers = [];
+        let currentSpecialist = null;
+        let currentService = null;
+        let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
 
         function initMap() {
             // Set initial view to Rostov-on-Don
@@ -649,51 +1055,93 @@
                 zoomControl: false,
                 attributionControl: false
             }).setView([47.2225, 39.7185], 13);
-
+            
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18
             }).addTo(map);
-
+            
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(map);
-
+            
             specialists.forEach(specialist => {
-                const marker = L.marker([specialist.lat, specialist.lng])
-                    .addTo(map)
-                    .bindPopup(`<b>${specialist.name}</b><br>${specialist.specialty}<br>Рейтинг: ${specialist.rating}`);
-
-                marker.on('click', function () {
-                    showSpecialistCard(specialist);
+                // Use different colors for markers
+                const markerColor = specialist.rating >= 4.8 ? 'green' : 'yellow';
+                
+                const marker = L.marker([specialist.lat, specialist.lng], {
+                    icon: L.divIcon({
+                        className: `custom-marker ${markerColor}`,
+                        html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
+                        iconSize: [20, 20],
+                        iconAnchor: [10, 10]
+                    })
+                })
+                .addTo(map)
+                .bindPopup(`
+                    <div>
+                        <b>${specialist.name}</b><br>
+                        ${specialist.specialty}<br>
+                        Рейтинг: ${specialist.rating}<br>
+                        <button onclick="showSpecialistCard(${specialist.id})">Подробнее</button>
+                    </div>
+                `);
+                
+                marker.on('click', function() {
+                    showSpecialistCard(specialist.id);
                 });
-
+                
                 markers.push(marker);
             });
         }
 
-        function showSpecialistCard(specialist) {
+        function showSpecialistCard(specialistId) {
+            const specialist = specialists.find(s => s.id === specialistId);
+            if (!specialist) return;
+            
+            currentSpecialist = specialist;
+            
             const card = document.getElementById('specialistCard');
             const name = document.getElementById('specialistName');
             const specialty = document.getElementById('specialistSpecialty');
             const rating = document.getElementById('specialistRating');
             const horizontalSchedule = document.getElementById('horizontalSchedule');
-
+            const servicesGrid = document.getElementById('servicesGrid');
+            const servicesSection = document.getElementById('servicesSection');
+            
             name.textContent = specialist.name;
             specialty.textContent = specialist.specialty;
             rating.textContent = specialist.rating;
-
+            
+            // Hide services initially
+            servicesSection.classList.remove('active');
+            
+            // Update schedule
             horizontalSchedule.innerHTML = '';
-
             specialist.schedule.forEach(item => {
                 const scheduleItem = document.createElement('div');
                 scheduleItem.className = 'schedule-item';
                 scheduleItem.innerHTML = `
-                        <div class="schedule-day">${item.day}</div>
-                        <div class="schedule-time">${item.time}</div>
-                    `;
+                    <div class="schedule-day">${item.day}</div>
+                    <div class="schedule-time">${item.time}</div>
+                `;
                 horizontalSchedule.appendChild(scheduleItem);
             });
-
+            
+            // Update services
+            servicesGrid.innerHTML = '';
+            specialist.services.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'service-card';
+                serviceCard.innerHTML = `
+                    <div class="service-image">${service.image}</div>
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-price">${service.price} руб.</div>
+                    <div class="service-duration">${service.duration}</div>
+                `;
+                serviceCard.addEventListener('click', () => openBookingModal(specialist, service));
+                servicesGrid.appendChild(serviceCard);
+            });
+            
             card.classList.add('active');
         }
 
@@ -702,78 +1150,326 @@
             card.classList.remove('active');
         }
 
+        function openBookingModal(specialist, service) {
+            currentSpecialist = specialist;
+            currentService = service;
+            
+            const modal = document.getElementById('bookingModal');
+            const bookingDetails = document.getElementById('bookingDetails');
+            const timeSelection = document.getElementById('timeSelection');
+            
+            // Set booking details
+            bookingDetails.innerHTML = `
+                <h3>${service.name}</h3>
+                <p>Специалист: ${specialist.name}</p>
+                <p>Стоимость: ${service.price} руб.</p>
+                <p>Длительность: ${service.duration}</p>
+            `;
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('bookingDate');
+            dateInput.min = today;
+            dateInput.value = today;
+            
+            // Generate time slots for today initially
+            updateTimeSlots(today);
+            
+            // Add event listener for date change
+            dateInput.addEventListener('change', function() {
+                updateTimeSlots(this.value);
+            });
+            
+            modal.classList.add('active');
+        }
+
+        function updateTimeSlots(selectedDate) {
+            const timeSelection = document.getElementById('timeSelection');
+            const dayOfWeek = new Date(selectedDate).getDay(); // 0 - Sunday, 1 - Monday, etc.
+            
+            // Find schedule for this day
+            const daySchedule = currentSpecialist.schedule.find(s => s.dayIndex === dayOfWeek);
+            
+            // Clear previous content
+            timeSelection.innerHTML = '';
+            
+            // Check if it's a day off
+            if (daySchedule && daySchedule.isDayOff) {
+                timeSelection.innerHTML = `
+                    <div class="day-off-message">
+                        В этот день специалист не работает. Выберите другую дату.
+                    </div>
+                `;
+                document.getElementById('confirmBookingBtn').disabled = true;
+                return;
+            }
+            
+            // If it's a working day, generate time slots
+            if (daySchedule && daySchedule.time && daySchedule.time !== 'Выходной') {
+                document.getElementById('confirmBookingBtn').disabled = false;
+                
+                const timeLabel = document.createElement('label');
+                timeLabel.textContent = 'Время:';
+                timeLabel.style.display = 'block';
+                timeLabel.style.marginBottom = '5px';
+                timeLabel.style.fontWeight = '500';
+                timeSelection.appendChild(timeLabel);
+                
+                const timeSlotsContainer = document.createElement('div');
+                timeSlotsContainer.className = 'time-slots';
+                
+                // Parse working hours
+                const [startTime, endTime] = daySchedule.time.split('-');
+                const startHour = parseInt(startTime.split(':')[0]);
+                const endHour = parseInt(endTime.split(':')[0]);
+                
+                // Generate time slots
+                for (let hour = startHour; hour < endHour; hour++) {
+                    for (let minute = 0; minute < 60; minute += 30) {
+                        const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                        
+                        const timeSlot = document.createElement('div');
+                        timeSlot.className = 'time-slot';
+                        timeSlot.textContent = timeString;
+                        timeSlot.addEventListener('click', function() {
+                            document.querySelectorAll('.time-slot').forEach(ts => ts.classList.remove('selected'));
+                            timeSlot.classList.add('selected');
+                        });
+                        timeSlotsContainer.appendChild(timeSlot);
+                    }
+                }
+                
+                timeSelection.appendChild(timeSlotsContainer);
+            } else {
+                timeSelection.innerHTML = `
+                    <div class="day-off-message">
+                        В этот день специалист не работает. Выберите другую дату.
+                    </div>
+                `;
+                document.getElementById('confirmBookingBtn').disabled = true;
+            }
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('active');
+        }
+
+        function confirmBooking() {
+            const date = document.getElementById('bookingDate').value;
+            const selectedTime = document.querySelector('.time-slot.selected');
+            
+            if (!date || !selectedTime) {
+                alert('Пожалуйста, выберите дату и время');
+                return;
+            }
+            
+            const time = selectedTime.textContent;
+            const appointment = {
+                id: Date.now(),
+                specialistId: currentSpecialist.id,
+                specialistName: currentSpecialist.name,
+                serviceName: currentService.name,
+                servicePrice: currentService.price,
+                date: date,
+                time: time,
+                timestamp: new Date(`${date}T${time}:00`).getTime()
+            };
+            
+            appointments.push(appointment);
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+            
+            alert('Запись успешно оформлена!');
+            closeBookingModal();
+            updateAppointmentsList();
+            
+            // Switch to appointments page
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-page="appointments"]').classList.add('active');
+            document.querySelectorAll('.page-container').forEach(page => page.classList.remove('active'));
+            document.getElementById('appointments-page').classList.add('active');
+        }
+
+        function cancelAppointment(appointmentId) {
+            if (confirm('Вы уверены, что хотите отменить запись?')) {
+                appointments = appointments.filter(app => app.id !== appointmentId);
+                localStorage.setItem('appointments', JSON.stringify(appointments));
+                updateAppointmentsList();
+            }
+        }
+
+        function updateAppointmentsList() {
+            const appointmentsList = document.getElementById('appointmentsList');
+            appointmentsList.innerHTML = '';
+            
+            if (appointments.length === 0) {
+                appointmentsList.innerHTML = '<p>У вас нет активных записей</p>';
+                return;
+            }
+            
+            // Sort appointments by date
+            appointments.sort((a, b) => a.timestamp - b.timestamp);
+            
+            appointments.forEach(appointment => {
+                const now = new Date().getTime();
+                const timeUntil = appointment.timestamp - now;
+                
+                // Only show upcoming appointments
+                if (timeUntil < 0) return;
+                
+                const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
+                
+                // Calculate progress (for demo, we'll use a fixed progress)
+                const progress = Math.min(100, 100 - (timeUntil / (7 * 24 * 60 * 60 * 1000)) * 100);
+                
+                const appointmentCard = document.createElement('div');
+                appointmentCard.className = 'appointment-card';
+                appointmentCard.innerHTML = `
+                    <div class="appointment-header">
+                        <div class="appointment-specialist">${appointment.specialistName}</div>
+                        <div class="appointment-service">${appointment.serviceName} - ${appointment.servicePrice} руб.</div>
+                    </div>
+                    <div class="appointment-time">
+                        <i class="far fa-calendar"></i>
+                        <span>${appointment.date} в ${appointment.time}</span>
+                    </div>
+                    <div class="countdown">
+                        До записи: ${days}д ${hours}ч ${minutes}м
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: ${progress}%"></div>
+                    </div>
+                    <button class="cancel-btn" data-id="${appointment.id}">Отменить запись</button>
+                `;
+                appointmentsList.appendChild(appointmentCard);
+            });
+            
+            // Add event listeners to cancel buttons
+            document.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const appointmentId = parseInt(this.getAttribute('data-id'));
+                    cancelAppointment(appointmentId);
+                });
+            });
+        }
+
         function generateCards() {
             const container = document.getElementById('cardsContainer');
             container.innerHTML = '';
-
+            
             specialists.forEach(specialist => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.setAttribute('data-category', specialist.category);
                 card.innerHTML = `
-                        <div class="card-header">
-                            <div class="name">${specialist.name}</div>
-                            <div class="specialty">${specialist.specialty}</div>
-                            <div class="rating">
-                                <span class="star">★</span>
-                                <span>${specialist.rating}</span>
-                            </div>
+                    <div class="card-header">
+                        <div class="name">${specialist.name}</div>
+                        <div class="specialty">${specialist.specialty}</div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span>${specialist.rating}</span>
                         </div>
-                        <button class="show-schedule-btn" data-id="${specialist.id}">Показать расписание</button>
-                        <div class="horizontal-schedule-container" id="schedule-container-${specialist.id}">
-                            <div class="horizontal-schedule" id="schedule-${specialist.id}">
-                                <!-- Schedule will be added here -->
-                            </div>
+                    </div>
+                    <button class="show-services-btn" data-id="${specialist.id}">Показать услуги</button>
+                    <div class="services-section" id="services-${specialist.id}">
+                        <h4>Услуги:</h4>
+                        <div class="services-grid">
+                            ${specialist.services.map(service => `
+                                <div class="service-card" onclick="openBookingModal(${JSON.stringify(specialist).replace(/"/g, '&quot;')}, ${JSON.stringify(service).replace(/"/g, '&quot;')})">
+                                    <div class="service-image">${service.image}</div>
+                                    <div class="service-name">${service.name}</div>
+                                    <div class="service-price">${service.price} руб.</div>
+                                </div>
+                            `).join('')}
                         </div>
-                        <button class="book-btn" data-id="${specialist.id}">Записаться</button>
-                    `;
+                    </div>
+                    <button class="show-schedule-btn" data-id="${specialist.id}">Показать расписание</button>
+                    <div class="horizontal-schedule-container" id="schedule-container-${specialist.id}">
+                        <div class="horizontal-schedule" id="schedule-${specialist.id}">
+                            <!-- Schedule will be added here -->
+                        </div>
+                    </div>
+                `;
                 container.appendChild(card);
-
+                
                 const scheduleContainer = document.getElementById(`schedule-${specialist.id}`);
                 specialist.schedule.forEach(item => {
                     const scheduleItem = document.createElement('div');
                     scheduleItem.className = 'schedule-item';
                     scheduleItem.innerHTML = `
-                            <div class="schedule-day">${item.day}</div>
-                            <div class="schedule-time">${item.time}</div>
-                        `;
+                        <div class="schedule-day">${item.day}</div>
+                        <div class="schedule-time">${item.time}</div>
+                    `;
                     scheduleContainer.appendChild(scheduleItem);
                 });
             });
-
+            
             document.querySelectorAll('.show-schedule-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
+                btn.addEventListener('click', function() {
                     const specialistId = this.getAttribute('data-id');
                     const scheduleContainer = document.getElementById(`schedule-container-${specialistId}`);
                     scheduleContainer.classList.toggle('active');
                     this.textContent = scheduleContainer.classList.contains('active') ? 'Скрыть расписание' : 'Показать расписание';
                 });
             });
-
-            document.querySelectorAll('.book-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
+            
+            document.querySelectorAll('.show-services-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
                     const specialistId = this.getAttribute('data-id');
-                    const specialist = specialists.find(s => s.id == specialistId);
-                    alert(`Запись к ${specialist.name} (${specialist.specialty}) успешно оформлена!`);
+                    const servicesSection = document.getElementById(`services-${specialistId}`);
+                    servicesSection.classList.toggle('active');
+                    this.textContent = servicesSection.classList.contains('active') ? 'Скрыть услуги' : 'Показать услуги';
+                });
+            });
+        }
+
+        // Category filter functionality
+        function setupCategoryFilter() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const cards = document.querySelectorAll('.card');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Update active button
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter cards
+                    cards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
             });
         }
 
         // Navigation functionality
         document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', function () {
+            tab.addEventListener('click', function() {
                 document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
-
+                
                 const pageId = this.getAttribute('data-page') + '-page';
                 document.querySelectorAll('.page-container').forEach(page => {
                     page.classList.remove('active');
                 });
                 document.getElementById(pageId).classList.add('active');
-
+                
                 if (pageId === 'search-page' && !map) {
                     initMap();
                 }
-
+                
+                if (pageId === 'appointments-page') {
+                    updateAppointmentsList();
+                }
+                
                 if (pageId !== 'search-page') {
                     closeSpecialistCard();
                 }
@@ -784,13 +1480,13 @@
         const profileBtn = document.getElementById('profileBtn');
         const profilePanel = document.getElementById('profilePanel');
         const overlay = document.getElementById('overlay');
-
-        profileBtn.addEventListener('click', function () {
+        
+        profileBtn.addEventListener('click', function() {
             profilePanel.classList.add('active');
             overlay.classList.add('active');
         });
-
-        overlay.addEventListener('click', function () {
+        
+        overlay.addEventListener('click', function() {
             profilePanel.classList.remove('active');
             overlay.classList.remove('active');
         });
@@ -799,10 +1495,31 @@
         const closeCardBtn = document.getElementById('closeCardBtn');
         closeCardBtn.addEventListener('click', closeSpecialistCard);
 
+        // Show services button in specialist card
+        const showServicesBtn = document.getElementById('showServicesBtn');
+        showServicesBtn.addEventListener('click', function() {
+            const servicesSection = document.getElementById('servicesSection');
+            servicesSection.classList.toggle('active');
+            this.textContent = servicesSection.classList.contains('active') ? 'Скрыть услуги' : 'Показать услуги';
+        });
+
+        // Booking modal functionality
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const confirmBookingBtn = document.getElementById('confirmBookingBtn');
+        const openBookingBtn = document.getElementById('openBookingBtn');
+        
+        closeModalBtn.addEventListener('click', closeBookingModal);
+        confirmBookingBtn.addEventListener('click', confirmBooking);
+        
         // Initialize the page
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             generateCards();
+            setupCategoryFilter();
+            updateAppointmentsList();
+            
+            // Update countdown every minute
+            setInterval(updateAppointmentsList, 60000);
         });
     </script>
 </body>
-</html>
+    </html>
