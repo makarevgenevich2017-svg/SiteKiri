@@ -517,7 +517,7 @@
             margin-top: 20px;
         }
 
-        .day-off-message {
+        .day-off-message, .no-time-message {
             color: #f44336;
             text-align: center;
             padding: 10px;
@@ -581,6 +581,15 @@
             background-color: #4caf50;
             border-radius: 4px;
             transition: width 0.5s;
+        }
+
+        .specialist-phone {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
         }
 
         /* Profile Panel */
@@ -800,6 +809,11 @@
             <button class="category-btn" data-category="beauty">Парикмахеры</button>
             <button class="category-btn" data-category="design">Дизайнеры</button>
             <button class="category-btn" data-category="companies">Компании</button>
+            <button class="category-btn" data-category="plumbing">Сантехника</button>
+            <button class="category-btn" data-category="manicure">Маникюр</button>
+            <button class="category-btn" data-category="water">Доставка воды</button>
+            <button class="category-btn" data-category="moving">Переезды</button>
+            <button class="category-btn" data-category="barber">Барберы</button>
         </div>
         <div class="cards-container" id="cardsContainer">
             <!-- Cards will be generated here -->
@@ -910,6 +924,7 @@
                 lat: 47.2225, 
                 lng: 39.7185,
                 category: "design",
+                phone: "+79281787683",
                 schedule: [
                     { day: "Пн", time: "9:00-18:00", dayIndex: 1 },
                     { day: "Вт", time: "9:00-18:00", dayIndex: 2 },
@@ -1038,6 +1053,213 @@
                     { id: 1, name: "Установка розеток", price: 1000, duration: "1 час", image: "🔌" },
                     { id: 2, name: "Замена проводки", price: 8000, duration: "1 день", image: "⚡" },
                     { id: 3, name: "Консультация", price: 500, duration: "30 мин", image: "💬" }
+                ]
+            },
+            { 
+                id: 7, 
+                name: "Андрей Тараданов", 
+                specialty: "Сантехник", 
+                rating: 5.0, 
+                lat: 47.2725, 
+                lng: 39.7685,
+                category: "plumbing",
+                phone: "+7 (988) 991-04-69",
+                schedule: [
+                    { day: "Пн", time: "8:00-20:00", dayIndex: 1 },
+                    { day: "Вт", time: "8:00-20:00", dayIndex: 2 },
+                    { day: "Ср", time: "8:00-20:00", dayIndex: 3 },
+                    { day: "Чт", time: "8:00-20:00", dayIndex: 4 },
+                    { day: "Пт", time: "8:00-20:00", dayIndex: 5 },
+                    { day: "Сб", time: "9:00-18:00", dayIndex: 6 },
+                    { day: "Вс", time: "9:00-16:00", dayIndex: 0 }
+                ],
+                services: [
+                    { id: 1, name: "Перенос труб ХВС и ГВС", price: 1500, duration: "1-2 часа", image: "🔧" },
+                    { id: 2, name: "Монтаж сантехнических труб", price: 1500, duration: "1-2 часа", image: "🛠️" },
+                    { id: 3, name: "Монтаж труб отопления", price: 2500, duration: "2-3 часа", image: "🔥" },
+                    { id: 4, name: "Демонтаж труб отопления", price: 2500, duration: "1-2 часа", image: "💧" },
+                    { id: 5, name: "Установка радиатора отопления", price: 2500, duration: "2-3 часа", image: "🔩" },
+                    { id: 6, name: "Замена радиатора отопления", price: 2500, duration: "2-3 часа", image: "🔄" },
+                    { id: 7, name: "Устранение засора", price: 1000, duration: "1 час", image: "🚽" },
+                    { id: 8, name: "Устранение засоров в сифонах", price: 1000, duration: "1 час", image: "🪠" },
+                    { id: 9, name: "Устранение засора в туалете", price: 1000, duration: "1 час", image: "🚾" },
+                    { id: 10, name: "Устранение засоров в канализации", price: 1000, duration: "1 час", image: "🌊" }
+                ]
+            },
+            { 
+                id: 8, 
+                name: "Елена Жесткова", 
+                specialty: "Маникюр и педикюр", 
+                rating: 5.0, 
+                lat: 47.2825, 
+                lng: 39.7785,
+                category: "manicure",
+                phone: "+7 (958) 797-84-46",
+                schedule: [
+                    { day: "Пн", time: "9:00-20:00", dayIndex: 1 },
+                    { day: "Вт", time: "9:00-20:00", dayIndex: 2 },
+                    { day: "Ср", time: "9:00-20:00", dayIndex: 3 },
+                    { day: "Чт", time: "9:00-20:00", dayIndex: 4 },
+                    { day: "Пт", time: "9:00-20:00", dayIndex: 5 },
+                    { day: "Сб", time: "9:00-18:00", dayIndex: 6 },
+                    { day: "Вс", time: "10:00-16:00", dayIndex: 0 }
+                ],
+                services: [
+                    { id: 1, name: "Маникюр с покрытием гель-лаком", price: 1200, duration: "1.5 часа", image: "💅" },
+                    { id: 2, name: "Аппаратный маникюр", price: 800, duration: "1 час", image: "🔧" },
+                    { id: 3, name: "Французский маникюр", price: 300, duration: "30 мин", image: "👑" },
+                    { id: 4, name: "Снятие гель-лака", price: 400, duration: "30 мин", image: "🧴" },
+                    { id: 5, name: "Ремонт ногтя", price: 200, duration: "15 мин", image: "🔨" }
+                ]
+            },
+            { 
+                id: 9, 
+                name: "Валентина Фельдшерова", 
+                specialty: "Клининг", 
+                rating: 4.5, 
+                lat: 47.2925, 
+                lng: 39.7885,
+                category: "cleaning",
+                phone: "+7 (988) 572-23-28",
+                schedule: [
+                    { day: "Пн", time: "8:00-20:00", dayIndex: 1 },
+                    { day: "Вт", time: "8:00-20:00", dayIndex: 2 },
+                    { day: "Ср", time: "8:00-20:00", dayIndex: 3 },
+                    { day: "Чт", time: "8:00-20:00", dayIndex: 4 },
+                    { day: "Пт", time: "8:00-20:00", dayIndex: 5 },
+                    { day: "Сб", time: "9:00-18:00", dayIndex: 6 },
+                    { day: "Вс", time: "9:00-16:00", dayIndex: 0 }
+                ],
+                services: [
+                    { id: 1, name: "Уборка после ремонта", price: 250, duration: "Расчет по площади", image: "🧹" },
+                    { id: 2, name: "Поддерживающая уборка", price: 100, duration: "Расчет по площади", image: "🏠" },
+                    { id: 3, name: "Генеральная уборка", price: 250, duration: "Расчет по площади", image: "✨" },
+                    { id: 4, name: "Мытьё окон", price: 1000, duration: "1-2 часа", image: "🪟" },
+                    { id: 5, name: "Мытьё балконов", price: 4000, duration: "2-3 часа", image: "🏞️" }
+                ]
+            },
+            { 
+                id: 10, 
+                name: "Нериз", 
+                specialty: "Доставка воды", 
+                rating: 4.7, 
+                lat: 47.3025, 
+                lng: 39.7985,
+                category: "water",
+                phone: "+7 (988) 891-95-00",
+                schedule: [
+                    { day: "Пн", time: "9:00-18:00", dayIndex: 1 },
+                    { day: "Вт", time: "9:00-18:00", dayIndex: 2 },
+                    { day: "Ср", time: "9:00-18:00", dayIndex: 3 },
+                    { day: "Чт", time: "9:00-18:00", dayIndex: 4 },
+                    { day: "Пт", time: "9:00-18:00", dayIndex: 5 },
+                    { day: "Сб", time: "10:00-15:00", dayIndex: 6 },
+                    { day: "Вс", time: "Выходной", dayIndex: 0, isDayOff: true }
+                ],
+                services: [
+                    { id: 1, name: "Доставка воды (2 бутыли)", price: 540, duration: "1-2 часа", image: "💧" },
+                    { id: 2, name: "Доставка воды (3 бутыли)", price: 750, duration: "1-2 часа", image: "🚰" },
+                    { id: 3, name: "Доставка воды (4 бутыли)", price: 880, duration: "1-2 часа", image: "🫗" },
+                    { id: 4, name: "Доставка помпы", price: 400, duration: "1-2 часа", image: "🔌" }
+                ]
+            },
+            { 
+                id: 11, 
+                name: "Александр К.", 
+                specialty: "Дизайнер", 
+                rating: 4.9, 
+                lat: 47.3125, 
+                lng: 39.8085,
+                category: "design",
+                phone: "+7 (961) 277-88-19",
+                schedule: [
+                    { day: "Пн", time: "10:00-19:00", dayIndex: 1 },
+                    { day: "Вт", time: "10:00-19:00", dayIndex: 2 },
+                    { day: "Ср", time: "10:00-19:00", dayIndex: 3 },
+                    { day: "Чт", time: "10:00-19:00", dayIndex: 4 },
+                    { day: "Пт", time: "10:00-18:00", dayIndex: 5 },
+                    { day: "Сб", time: "11:00-16:00", dayIndex: 6 },
+                    { day: "Вс", time: "Выходной", dayIndex: 0, isDayOff: true }
+                ],
+                services: [
+                    { id: 1, name: "Дизайн логотипа", price: 5000, duration: "3-5 дней", image: "🎨" },
+                    { id: 2, name: "Дизайн баннера", price: 1000, duration: "1-2 дня", image: "🖼️" },
+                    { id: 3, name: "Дизайн карточки товаров", price: 1000, duration: "1-2 дня", image: "📦" },
+                    { id: 4, name: "Дизайн для полиграфии", price: 5000, duration: "3-5 дней", image: "📄" }
+                ]
+            },
+            { 
+                id: 12, 
+                name: "Елена Ревута", 
+                specialty: "Веб-дизайнер", 
+                rating: 5.0, 
+                lat: 47.3225, 
+                lng: 39.8185,
+                category: "design",
+                phone: "+7 (989) 622-98-77",
+                schedule: [
+                    { day: "Пн", time: "9:00-18:00", dayIndex: 1 },
+                    { day: "Вт", time: "9:00-18:00", dayIndex: 2 },
+                    { day: "Ср", time: "9:00-18:00", dayIndex: 3 },
+                    { day: "Чт", time: "9:00-18:00", dayIndex: 4 },
+                    { day: "Пт", time: "9:00-18:00", dayIndex: 5 },
+                    { day: "Сб", time: "10:00-15:00", dayIndex: 6 },
+                    { day: "Вс", time: "Выходной", dayIndex: 0, isDayOff: true }
+                ],
+                services: [
+                    { id: 1, name: "Дизайн лендинга", price: 15000, duration: "5-7 дней", image: "🌐" },
+                    { id: 2, name: "Дизайн сайта-визитки", price: 7000, duration: "3-5 дней", image: "💼" },
+                    { id: 3, name: "Дизайн мобильного сайта", price: 5000, duration: "3-5 дней", image: "📱" },
+                    { id: 4, name: "Разработка логотипа", price: 5000, duration: "3-5 дней", image: "🔖" }
+                ]
+            },
+            { 
+                id: 13, 
+                name: "Александр Б.", 
+                specialty: "Вывоз мусора и переезды", 
+                rating: 4.3, 
+                lat: 47.3325, 
+                lng: 39.8285,
+                category: "moving",
+                phone: "+7 (988) 992-31-20",
+                schedule: [
+                    { day: "Пн", time: "8:00-20:00", dayIndex: 1 },
+                    { day: "Вт", time: "8:00-20:00", dayIndex: 2 },
+                    { day: "Ср", time: "8:00-20:00", dayIndex: 3 },
+                    { day: "Чт", time: "8:00-20:00", dayIndex: 4 },
+                    { day: "Пт", time: "8:00-20:00", dayIndex: 5 },
+                    { day: "Сб", time: "9:00-18:00", dayIndex: 6 },
+                    { day: "Вс", time: "9:00-16:00", dayIndex: 0 }
+                ],
+                services: [
+                    { id: 1, name: "Вывоз строительного мусора", price: "-", duration: "2-3 часа", image: "🗑️" },
+                    { id: 2, name: "Вывоз старой мебели", price: "-", duration: "1-2 часа", image: "🛋️" },
+                    { id: 3, name: "Вывоз мусора газелью", price: "-", duration: "2-4 часа", image: "🚚" },
+                    { id: 4, name: "Вывоз старой сантехники", price: "-", duration: "1-2 часа", image: "🚽" }
+                ]
+            },
+            { 
+                id: 14, 
+                name: "Владимир", 
+                specialty: "Барбер", 
+                rating: 4.9, 
+                lat: 47.3425, 
+                lng: 39.8385,
+                category: "barber",
+                phone: "+7 (928) 121-92-83",
+                schedule: [
+                    { day: "Пн", time: "9:00-20:00", dayIndex: 1 },
+                    { day: "Вт", time: "9:00-20:00", dayIndex: 2 },
+                    { day: "Ср", time: "9:00-20:00", dayIndex: 3 },
+                    { day: "Чт", time: "9:00-20:00", dayIndex: 4 },
+                    { day: "Пт", time: "9:00-20:00", dayIndex: 5 },
+                    { day: "Сб", time: "10:00-18:00", dayIndex: 6 },
+                    { day: "Вс", time: "10:00-16:00", dayIndex: 0 }
+                ],
+                services: [
+                    { id: 1, name: "Мужская стрижка", price: "1000-3000", duration: "1 час", image: "✂️" },
+                    { id: 2, name: "Женская стрижка", price: "2500-5000", duration: "1.5 часа", image: "💇‍♀️" },
+                    { id: 3, name: "Детская стрижка", price: "500-1500", duration: "45 мин", image: "👶" }
                 ]
             }
         ];
@@ -1206,40 +1428,77 @@
             
             // If it's a working day, generate time slots
             if (daySchedule && daySchedule.time && daySchedule.time !== 'Выходной') {
-                document.getElementById('confirmBookingBtn').disabled = false;
-                
-                const timeLabel = document.createElement('label');
-                timeLabel.textContent = 'Время:';
-                timeLabel.style.display = 'block';
-                timeLabel.style.marginBottom = '5px';
-                timeLabel.style.fontWeight = '500';
-                timeSelection.appendChild(timeLabel);
-                
-                const timeSlotsContainer = document.createElement('div');
-                timeSlotsContainer.className = 'time-slots';
-                
                 // Parse working hours
                 const [startTime, endTime] = daySchedule.time.split('-');
                 const startHour = parseInt(startTime.split(':')[0]);
                 const endHour = parseInt(endTime.split(':')[0]);
                 
                 // Generate time slots
+                const timeSlotsContainer = document.createElement('div');
+                timeSlotsContainer.className = 'time-slots';
+                
+                let hasAvailableSlots = false;
+                
                 for (let hour = startHour; hour < endHour; hour++) {
                     for (let minute = 0; minute < 60; minute += 30) {
                         const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
                         
+                        // Check if this time is in the past for today
+                        const isToday = selectedDate === new Date().toISOString().split('T')[0];
+                        let isDisabled = false;
+                        
+                        if (isToday) {
+                            const now = new Date();
+                            const slotTime = new Date();
+                            slotTime.setHours(hour, minute, 0, 0);
+                            
+                            if (slotTime < now) {
+                                isDisabled = true;
+                            }
+                        }
+                        
+                        if (!isDisabled) {
+                            hasAvailableSlots = true;
+                        }
+                        
                         const timeSlot = document.createElement('div');
-                        timeSlot.className = 'time-slot';
+                        timeSlot.className = `time-slot ${isDisabled ? 'disabled' : ''}`;
                         timeSlot.textContent = timeString;
-                        timeSlot.addEventListener('click', function() {
-                            document.querySelectorAll('.time-slot').forEach(ts => ts.classList.remove('selected'));
-                            timeSlot.classList.add('selected');
-                        });
+                        
+                        if (!isDisabled) {
+                            timeSlot.addEventListener('click', function() {
+                                document.querySelectorAll('.time-slot').forEach(ts => {
+                                    if (!ts.classList.contains('disabled')) {
+                                        ts.classList.remove('selected');
+                                    }
+                                });
+                                timeSlot.classList.add('selected');
+                            });
+                        }
+                        
                         timeSlotsContainer.appendChild(timeSlot);
                     }
                 }
                 
-                timeSelection.appendChild(timeSlotsContainer);
+                if (hasAvailableSlots) {
+                    document.getElementById('confirmBookingBtn').disabled = false;
+                    
+                    const timeLabel = document.createElement('label');
+                    timeLabel.textContent = 'Время:';
+                    timeLabel.style.display = 'block';
+                    timeLabel.style.marginBottom = '5px';
+                    timeLabel.style.fontWeight = '500';
+                    timeSelection.appendChild(timeLabel);
+                    
+                    timeSelection.appendChild(timeSlotsContainer);
+                } else {
+                    document.getElementById('confirmBookingBtn').disabled = true;
+                    timeSelection.innerHTML = `
+                        <div class="no-time-message">
+                            Свободного времени нет, выберете другой день
+                        </div>
+                    `;
+                }
             } else {
                 timeSelection.innerHTML = `
                     <div class="day-off-message">
@@ -1269,6 +1528,7 @@
                 id: Date.now(),
                 specialistId: currentSpecialist.id,
                 specialistName: currentSpecialist.name,
+                specialistPhone: currentSpecialist.phone || null,
                 serviceName: currentService.name,
                 servicePrice: currentService.price,
                 date: date,
@@ -1281,13 +1541,15 @@
             
             alert('Запись успешно оформлена!');
             closeBookingModal();
-            updateAppointmentsList();
             
             // Switch to appointments page
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelector('[data-page="appointments"]').classList.add('active');
             document.querySelectorAll('.page-container').forEach(page => page.classList.remove('active'));
             document.getElementById('appointments-page').classList.add('active');
+            
+            // Update appointments list
+            updateAppointmentsList();
         }
 
         function cancelAppointment(appointmentId) {
@@ -1326,6 +1588,16 @@
                 
                 const appointmentCard = document.createElement('div');
                 appointmentCard.className = 'appointment-card';
+                
+                let phoneSection = '';
+                if (appointment.specialistPhone) {
+                    phoneSection = `
+                        <div class="specialist-phone">
+                            Напишите этому специалисту: ${appointment.specialistPhone}
+                        </div>
+                    `;
+                }
+                
                 appointmentCard.innerHTML = `
                     <div class="appointment-header">
                         <div class="appointment-specialist">${appointment.specialistName}</div>
@@ -1341,6 +1613,7 @@
                     <div class="progress-bar">
                         <div class="progress" style="width: ${progress}%"></div>
                     </div>
+                    ${phoneSection}
                     <button class="cancel-btn" data-id="${appointment.id}">Отменить запись</button>
                 `;
                 appointmentsList.appendChild(appointmentCard);
@@ -1506,11 +1779,10 @@
         // Booking modal functionality
         const closeModalBtn = document.getElementById('closeModalBtn');
         const confirmBookingBtn = document.getElementById('confirmBookingBtn');
-        const openBookingBtn = document.getElementById('openBookingBtn');
         
         closeModalBtn.addEventListener('click', closeBookingModal);
         confirmBookingBtn.addEventListener('click', confirmBooking);
-        
+
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             generateCards();
