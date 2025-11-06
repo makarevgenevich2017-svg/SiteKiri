@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Все существующие стили остаются БЕЗ ИЗМЕНЕНИЙ */
         * {
             margin: 0;
             padding: 0;
@@ -22,20 +23,22 @@
             position: relative;
         }
 
-        /* Страница авторизации */
-        .auth-page {
+        /* Стили для модального окна регистрации */
+        .auth-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #f8fdf9;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            background-color: rgba(0,0,0,0.5);
             z-index: 2000;
-            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-modal.active {
+            display: flex;
         }
 
         .auth-container {
@@ -45,6 +48,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
+            margin: 20px;
         }
 
         .auth-title {
@@ -733,17 +737,29 @@
             background-color: #e8f5e9;
         }
 
-        /* Добавляем кнопку выхода */
-        .logout-btn {
+        /* Кнопка регистрации и выхода */
+        .auth-action-btn {
             margin-top: auto;
             padding: 15px;
             border-radius: 15px;
             cursor: pointer;
             transition: background-color 0.3s;
-            background-color: #ffebee;
-            color: #f44336;
             text-align: center;
             font-weight: bold;
+        }
+
+        .register-btn {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .register-btn:hover {
+            background-color: #bbdefb;
+        }
+
+        .logout-btn {
+            background-color: #ffebee;
+            color: #f44336;
         }
 
         .logout-btn:hover {
@@ -880,23 +896,23 @@
     </style>
 </head>
 <body>
-    <!-- Страница авторизации -->
-    <div class="auth-page" id="authPage">
+    <!-- Модальное окно авторизации -->
+    <div class="auth-modal" id="authModal">
         <div class="auth-container">
-            <h2 class="auth-title" id="authTitle">Вход в аккаунт</h2>
+            <h2 class="auth-title" id="authTitle">Регистрация</h2>
             <div class="auth-form">
                 <input type="text" class="auth-input" id="authName" placeholder="Имя">
                 <input type="password" class="auth-input" id="authPassword" placeholder="Пароль">
-                <button class="auth-button" id="authButton">Войти</button>
+                <button class="auth-button" id="authButton">Зарегистрироваться</button>
                 <div class="auth-switch">
-                    <span id="authSwitch">Создать аккаунт</span>
+                    <span id="authSwitch">Уже есть аккаунт</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Основной интерфейс (изначально скрыт) -->
-    <div id="mainApp" style="display: none;">
+    <!-- Основной интерфейс -->
+    <div id="mainApp">
         <!-- Header -->
         <header>
             <div class="logo">п</div>
@@ -1008,14 +1024,15 @@
         <div class="profile-panel" id="profilePanel">
             <div class="profile-header">
                 <div class="profile-avatar" id="profileAvatar">К</div>
-                <div class="profile-name" id="profileName">Кирилл К.</div>
+                <div class="profile-name" id="profileName">Гость</div>
             </div>
             <div class="profile-menu">
                 <div class="profile-menu-item">Настройки</div>
                 <div class="profile-menu-item">Записи</div>
                 <div class="profile-menu-item">Поддержка</div>
                 <div class="profile-menu-item">Для исполнителя</div>
-                <div class="logout-btn" id="logoutBtn">Выйти из аккаунта</div>
+                <div class="auth-action-btn register-btn" id="registerBtn">Зарегистрироваться</div>
+                <div class="auth-action-btn logout-btn" id="logoutBtn" style="display: none;">Выйти из аккаунта</div>
             </div>
         </div>
 
@@ -1047,7 +1064,7 @@
 
         // Data for specialists
         const specialists = [
-            { 
+{ 
                 id: 1, 
                 name: "Макар", 
                 specialty: "IT специалист", 
@@ -1392,7 +1409,7 @@
                     { id: 2, name: "Женская стрижка", price: "2500-5000", duration: "1.5 часа", image: "💇‍♀️" },
                     { id: 3, name: "Детская стрижка", price: "500-1500", duration: "45 мин", image: "👶" }
                 ]
-            }
+        }
         ];
 
         // Обновляем координаты специалистов на случайные
@@ -1409,6 +1426,7 @@
         let markers = [];
         let currentSpecialist = null;
         let currentService = null;
+        let pendingBooking = null; // Для хранения данных о бронировании до регистрации
 
         // Функции для работы с localStorage
         function saveUserData() {
@@ -1434,14 +1452,36 @@
         }
 
         // Функции авторизации
-        function showAuthPage() {
-            document.getElementById('authPage').style.display = 'flex';
-            document.getElementById('mainApp').style.display = 'none';
+        function showAuthModal() {
+            document.getElementById('authModal').classList.add('active');
         }
 
-        function hideAuthPage() {
-            document.getElementById('authPage').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'block';
+        function hideAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+            // Очищаем поля формы
+            document.getElementById('authName').value = '';
+            document.getElementById('authPassword').value = '';
+        }
+
+        function register(username, password) {
+            // В реальном приложении здесь должна быть регистрация на сервере
+            // Для демо просто сохраняем пользователя
+            currentUser = {
+                username: username,
+                firstLetter: username.charAt(0).toUpperCase()
+            };
+            
+            saveUserData();
+            updateUIForUser();
+            hideAuthModal();
+            
+            // Если есть отложенное бронирование, выполняем его
+            if (pendingBooking) {
+                completeBooking(pendingBooking);
+                pendingBooking = null;
+            }
+            
+            alert('Регистрация прошла успешно!');
         }
 
         function login(username, password) {
@@ -1454,58 +1494,100 @@
             
             saveUserData();
             updateUIForUser();
-            hideAuthPage();
-        }
-
-        function register(username, password) {
-            // В реальном приложении здесь должна быть регистрация на сервере
-            // Для демо просто сохраняем пользователя
-            currentUser = {
-                username: username,
-                firstLetter: username.charAt(0).toUpperCase()
-            };
+            hideAuthModal();
             
-            saveUserData();
-            appointments = [];
-            localStorage.setItem('appointments', JSON.stringify(appointments));
-            updateUIForUser();
-            hideAuthPage();
+            // Если есть отложенное бронирование, выполняем его
+            if (pendingBooking) {
+                completeBooking(pendingBooking);
+                pendingBooking = null;
+            }
         }
 
         function logout() {
             clearUserData();
-            showAuthPage();
+            updateUIForUser();
+            updateAppointmentsList();
+            
+            // Закрываем панель профиля
+            document.getElementById('profilePanel').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            
+            alert('Вы вышли из аккаунта');
         }
 
         function updateUIForUser() {
             if (currentUser) {
-                // Обновляем аватарку
+                // Обновляем аватарку и имя
                 document.getElementById('profileBtn').textContent = currentUser.firstLetter;
                 document.getElementById('profileAvatar').textContent = currentUser.firstLetter;
                 document.getElementById('profileName').textContent = currentUser.username;
+                
+                // Показываем кнопку выхода, скрываем кнопку регистрации
+                document.getElementById('logoutBtn').style.display = 'block';
+                document.getElementById('registerBtn').style.display = 'none';
+            } else {
+                // Сбрасываем на гостевой режим
+                document.getElementById('profileBtn').textContent = 'К';
+                document.getElementById('profileAvatar').textContent = 'К';
+                document.getElementById('profileName').textContent = 'Гость';
+                
+                // Показываем кнопку регистрации, скрываем кнопку выхода
+                document.getElementById('logoutBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'block';
             }
         }
 
         function checkAuth() {
             if (loadUserData()) {
                 updateUIForUser();
-                hideAuthPage();
                 return true;
             }
             return false;
         }
 
-        // Инициализация авторизации
+        // Функция для завершения бронирования после регистрации
+        function completeBooking(bookingData) {
+            const { date, time, specialist, service } = bookingData;
+            
+            const appointment = {
+                id: Date.now(),
+                specialistId: specialist.id,
+                specialistName: specialist.name,
+                specialistPhone: specialist.phone || null,
+                serviceName: service.name,
+                servicePrice: service.price,
+                date: date,
+                time: time,
+                timestamp: new Date(`${date}T${time}:00`).getTime()
+            };
+            
+            appointments.push(appointment);
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+            
+            alert('Запись успешно оформлена!');
+            closeBookingModal();
+            
+            // Switch to appointments page
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-page="appointments"]').classList.add('active');
+            document.querySelectorAll('.page-container').forEach(page => page.classList.remove('active'));
+            document.getElementById('appointments-page').classList.add('active');
+            
+            // Update appointments list
+            updateAppointmentsList();
+        }
+
+        // Инициализация приложения
         document.addEventListener('DOMContentLoaded', function() {
             // Настройка обработчиков для формы авторизации
-            const authPage = document.getElementById('authPage');
+            const authModal = document.getElementById('authModal');
             const authTitle = document.getElementById('authTitle');
             const authButton = document.getElementById('authButton');
             const authSwitch = document.getElementById('authSwitch');
             const authName = document.getElementById('authName');
             const authPassword = document.getElementById('authPassword');
             
-            let isLoginMode = true;
+            let isLoginMode = false; // По умолчанию режим регистрации
             
             authButton.addEventListener('click', function() {
                 const username = authName.value.trim();
@@ -1537,13 +1619,26 @@
                 }
             });
             
+            // Закрытие модального окна при клике вне его
+            authModal.addEventListener('click', function(e) {
+                if (e.target === authModal) {
+                    hideAuthModal();
+                }
+            });
+            
+            // Обработчик кнопки регистрации в панели профиля
+            document.getElementById('registerBtn').addEventListener('click', function() {
+                showAuthModal();
+                // Закрываем панель профиля
+                document.getElementById('profilePanel').classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
+            });
+            
             // Обработчик выхода из аккаунта
             document.getElementById('logoutBtn').addEventListener('click', logout);
             
             // Проверяем авторизацию при загрузке
-            if (!checkAuth()) {
-                showAuthPage();
-            }
+            checkAuth();
             
             // Инициализация остального приложения
             generateCards();
@@ -1796,6 +1891,7 @@
         function closeBookingModal() {
             const modal = document.getElementById('bookingModal');
             modal.classList.remove('active');
+            pendingBooking = null; // Сбрасываем отложенное бронирование
         }
 
         function confirmBooking() {
@@ -1808,32 +1904,31 @@
             }
             
             const time = selectedTime.textContent;
-            const appointment = {
-                id: Date.now(),
-                specialistId: currentSpecialist.id,
-                specialistName: currentSpecialist.name,
-                specialistPhone: currentSpecialist.phone || null,
-                serviceName: currentService.name,
-                servicePrice: currentService.price,
+            
+            // Проверяем, авторизован ли пользователь
+            if (!currentUser) {
+                // Сохраняем данные бронирования для выполнения после регистрации
+                pendingBooking = {
+                    date: date,
+                    time: time,
+                    specialist: currentSpecialist,
+                    service: currentService
+                };
+                
+                // Показываем модальное окно регистрации
+                showAuthModal();
+                closeBookingModal();
+                alert('Для оформления записи необходимо зарегистрироваться');
+                return;
+            }
+            
+            // Если пользователь авторизован, выполняем бронирование
+            completeBooking({
                 date: date,
                 time: time,
-                timestamp: new Date(`${date}T${time}:00`).getTime()
-            };
-            
-            appointments.push(appointment);
-            localStorage.setItem('appointments', JSON.stringify(appointments));
-            
-            alert('Запись успешно оформлена!');
-            closeBookingModal();
-            
-            // Switch to appointments page
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector('[data-page="appointments"]').classList.add('active');
-            document.querySelectorAll('.page-container').forEach(page => page.classList.remove('active'));
-            document.getElementById('appointments-page').classList.add('active');
-            
-            // Update appointments list
-            updateAppointmentsList();
+                specialist: currentSpecialist,
+                service: currentService
+            });
         }
 
         function cancelAppointment(appointmentId) {
