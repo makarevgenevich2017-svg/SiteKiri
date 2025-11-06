@@ -22,6 +22,82 @@
             position: relative;
         }
 
+        /* Страница авторизации */
+        .auth-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8fdf9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-title {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-input {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .auth-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .auth-button:hover {
+            background-color: #388e3c;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+        }
+
+        .auth-switch span {
+            color: #4caf50;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Остальные стили остаются БЕЗ ИЗМЕНЕНИЙ */
         /* Header Styles */
         header {
             background-color: #fff;
@@ -657,6 +733,23 @@
             background-color: #e8f5e9;
         }
 
+        /* Добавляем кнопку выхода */
+        .logout-btn {
+            margin-top: auto;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #ffebee;
+            color: #f44336;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: #ffcdd2;
+        }
+
         /* Development Message */
         .development-message {
             text-align: center;
@@ -787,133 +880,171 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">п</div>
-        <div class="nav-tabs">
-            <div class="nav-tab active" data-page="main">Главная</div>
-            <div class="nav-tab" data-page="search">Поиск</div>
-            <div class="nav-tab" data-page="appointments">Записи</div>
-            <div class="nav-tab" data-page="favorites">Избранные</div>
-        </div>
-        <div class="profile-btn" id="profileBtn">К</div>
-    </header>
-
-    <!-- Main Page -->
-    <div class="page-container active" id="main-page">
-        <h1>Специалисты</h1>
-        <div class="category-filter" id="categoryFilter">
-            <button class="category-btn active" data-category="all">Все</button>
-            <button class="category-btn" data-category="cleaning">Клининг</button>
-            <button class="category-btn" data-category="cooking">Повара</button>
-            <button class="category-btn" data-category="beauty">Парикмахеры</button>
-            <button class="category-btn" data-category="design">Дизайнеры</button>
-            <button class="category-btn" data-category="companies">Компании</button>
-            <button class="category-btn" data-category="plumbing">Сантехника</button>
-            <button class="category-btn" data-category="manicure">Маникюр</button>
-            <button class="category-btn" data-category="water">Доставка воды</button>
-            <button class="category-btn" data-category="moving">Переезды</button>
-            <button class="category-btn" data-category="barber">Барберы</button>
-        </div>
-        <div class="cards-container" id="cardsContainer">
-            <!-- Cards will be generated here -->
-        </div>
-    </div>
-
-    <!-- Search Page -->
-    <div class="page-container" id="search-page">
-        <h1>Поиск специалистов</h1>
-        <div id="map-container">
-            <div id="map"></div>
-        </div>
-        <div class="specialist-card" id="specialistCard">
-            <button class="close-card-btn" id="closeCardBtn">×</button>
-            <div class="card-header">
-                <div class="name" id="specialistName">Макар</div>
-                <div class="specialty" id="specialistSpecialty">IT специалист</div>
-                <div class="rating">
-                    <span class="star">★</span>
-                    <span id="specialistRating">5.0</span>
+    <!-- Страница авторизации -->
+    <div class="auth-page" id="authPage">
+        <div class="auth-container">
+            <h2 class="auth-title" id="authTitle">Вход в аккаунт</h2>
+            <div class="auth-form">
+                <input type="text" class="auth-input" id="authName" placeholder="Имя">
+                <input type="password" class="auth-input" id="authPassword" placeholder="Пароль">
+                <button class="auth-button" id="authButton">Войти</button>
+                <div class="auth-switch">
+                    <span id="authSwitch">Создать аккаунт</span>
                 </div>
             </div>
-            
-            <button class="show-services-btn" id="showServicesBtn">Показать услуги</button>
-            
-            <div class="services-section" id="servicesSection">
-                <h3 class="services-title">Услуги</h3>
-                <div class="services-grid" id="servicesGrid">
-                    <!-- Services will be added here -->
+        </div>
+    </div>
+
+    <!-- Основной интерфейс (изначально скрыт) -->
+    <div id="mainApp" style="display: none;">
+        <!-- Header -->
+        <header>
+            <div class="logo">п</div>
+            <div class="nav-tabs">
+                <div class="nav-tab active" data-page="main">Главная</div>
+                <div class="nav-tab" data-page="search">Поиск</div>
+                <div class="nav-tab" data-page="appointments">Записи</div>
+                <div class="nav-tab" data-page="favorites">Избранные</div>
+            </div>
+            <div class="profile-btn" id="profileBtn">К</div>
+        </header>
+
+        <!-- Main Page -->
+        <div class="page-container active" id="main-page">
+            <h1>Специалисты</h1>
+            <div class="category-filter" id="categoryFilter">
+                <button class="category-btn active" data-category="all">Все</button>
+                <button class="category-btn" data-category="cleaning">Клининг</button>
+                <button class="category-btn" data-category="cooking">Повара</button>
+                <button class="category-btn" data-category="beauty">Парикмахеры</button>
+                <button class="category-btn" data-category="design">Дизайнеры</button>
+                <button class="category-btn" data-category="companies">Компании</button>
+                <button class="category-btn" data-category="plumbing">Сантехника</button>
+                <button class="category-btn" data-category="manicure">Маникюр</button>
+                <button class="category-btn" data-category="water">Доставка воды</button>
+                <button class="category-btn" data-category="moving">Переезды</button>
+                <button class="category-btn" data-category="barber">Барберы</button>
+            </div>
+            <div class="cards-container" id="cardsContainer">
+                <!-- Cards will be generated here -->
+            </div>
+        </div>
+
+        <!-- Search Page -->
+        <div class="page-container" id="search-page">
+            <h1>Поиск специалистов</h1>
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
+            <div class="specialist-card" id="specialistCard">
+                <button class="close-card-btn" id="closeCardBtn">×</button>
+                <div class="card-header">
+                    <div class="name" id="specialistName">Макар</div>
+                    <div class="specialty" id="specialistSpecialty">IT специалист</div>
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span id="specialistRating">5.0</span>
+                    </div>
                 </div>
-            </div>
-            
-            <h3>График работы</h3>
-            <div class="horizontal-schedule-container active" id="horizontalScheduleContainer">
-                <div class="horizontal-schedule" id="horizontalSchedule">
-                    <!-- Horizontal schedule will be added here -->
+                
+                <button class="show-services-btn" id="showServicesBtn">Показать услуги</button>
+                
+                <div class="services-section" id="servicesSection">
+                    <h3 class="services-title">Услуги</h3>
+                    <div class="services-grid" id="servicesGrid">
+                        <!-- Services will be added here -->
+                    </div>
                 </div>
+                
+                <h3>График работы</h3>
+                <div class="horizontal-schedule-container active" id="horizontalScheduleContainer">
+                    <div class="horizontal-schedule" id="horizontalSchedule">
+                        <!-- Horizontal schedule will be added here -->
+                    </div>
+                </div>
+                <button class="book-btn" id="openBookingBtn">Записаться</button>
             </div>
-            <button class="book-btn" id="openBookingBtn">Записаться</button>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Введите имя или специальность...">
-            <button>Поиск</button>
-        </div>
-    </div>
-
-    <!-- Appointments Page -->
-    <div class="page-container" id="appointments-page">
-        <h1>Мои записи</h1>
-        <div class="appointments-list" id="appointmentsList">
-            <!-- Appointments will be added here -->
-        </div>
-    </div>
-
-    <!-- Favorites Page -->
-    <div class="page-container" id="favorites-page">
-        <div class="development-message">В разработке</div>
-    </div>
-
-    <!-- Booking Modal -->
-    <div class="booking-modal" id="bookingModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Запись на услугу</h2>
-                <button class="close-modal" id="closeModalBtn">×</button>
+            <div class="search-bar">
+                <input type="text" placeholder="Введите имя или специальность...">
+                <button>Поиск</button>
             </div>
-            <div id="bookingDetails">
-                <!-- Booking details will be added here -->
-            </div>
-            <div class="form-group">
-                <label for="bookingDate">Дата:</label>
-                <input type="date" id="bookingDate">
-            </div>
-            <div id="timeSelection">
-                <!-- Time slots or day off message will be added here -->
-            </div>
-            <button class="confirm-booking" id="confirmBookingBtn">Подтвердить запись</button>
         </div>
-    </div>
 
-    <!-- Profile Panel -->
-    <div class="profile-panel" id="profilePanel">
-        <div class="profile-header">
-            <div class="profile-avatar">К</div>
-            <div class="profile-name">Кирилл К.</div>
+        <!-- Appointments Page -->
+        <div class="page-container" id="appointments-page">
+            <h1>Мои записи</h1>
+            <div class="appointments-list" id="appointmentsList">
+                <!-- Appointments will be added here -->
+            </div>
         </div>
-        <div class="profile-menu">
-            <div class="profile-menu-item">Настройки</div>
-            <div class="profile-menu-item">Записи</div>
-            <div class="profile-menu-item">Поддержка</div>
-            <div class="profile-menu-item">Для исполнителя</div>
-        </div>
-    </div>
 
-    <!-- Overlay for profile panel -->
-    <div class="overlay" id="overlay"></div>
+        <!-- Favorites Page -->
+        <div class="page-container" id="favorites-page">
+            <div class="development-message">В разработке</div>
+        </div>
+
+        <!-- Booking Modal -->
+        <div class="booking-modal" id="bookingModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Запись на услугу</h2>
+                    <button class="close-modal" id="closeModalBtn">×</button>
+                </div>
+                <div id="bookingDetails">
+                    <!-- Booking details will be added here -->
+                </div>
+                <div class="form-group">
+                    <label for="bookingDate">Дата:</label>
+                    <input type="date" id="bookingDate">
+                </div>
+                <div id="timeSelection">
+                    <!-- Time slots or day off message will be added here -->
+                </div>
+                <button class="confirm-booking" id="confirmBookingBtn">Подтвердить запись</button>
+            </div>
+        </div>
+
+        <!-- Profile Panel -->
+        <div class="profile-panel" id="profilePanel">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profileAvatar">К</div>
+                <div class="profile-name" id="profileName">Кирилл К.</div>
+            </div>
+            <div class="profile-menu">
+                <div class="profile-menu-item">Настройки</div>
+                <div class="profile-menu-item">Записи</div>
+                <div class="profile-menu-item">Поддержка</div>
+                <div class="profile-menu-item">Для исполнителя</div>
+                <div class="logout-btn" id="logoutBtn">Выйти из аккаунта</div>
+            </div>
+        </div>
+
+        <!-- Overlay for profile panel -->
+        <div class="overlay" id="overlay"></div>
+    </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Функция для генерации случайных координат в пределах Ростова-на-Дону
+        function generateRandomRostovCoords() {
+            // Центр Ростова-на-Дону
+            const centerLat = 47.2225;
+            const centerLng = 39.7185;
+            
+            // Радиус разброса в градусах (примерно 5 км)
+            const radius = 0.05;
+            
+            // Генерируем случайные смещения
+            const randomLat = (Math.random() - 0.5) * radius;
+            const randomLng = (Math.random() - 0.5) * radius;
+            
+            return {
+                lat: centerLat + randomLat,
+                lng: centerLng + randomLng
+            };
+        }
+
         // Data for specialists
         const specialists = [
             { 
@@ -1264,13 +1395,166 @@
             }
         ];
 
-        // Initialize the map
+        // Обновляем координаты специалистов на случайные
+        specialists.forEach(specialist => {
+            const newCoords = generateRandomRostovCoords();
+            specialist.lat = newCoords.lat;
+            specialist.lng = newCoords.lng;
+        });
+
+        // Система авторизации
+        let currentUser = null;
+        let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
         let map;
         let markers = [];
         let currentSpecialist = null;
         let currentService = null;
-        let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
 
+        // Функции для работы с localStorage
+        function saveUserData() {
+            if (currentUser) {
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+        }
+
+        function loadUserData() {
+            const userData = localStorage.getItem('currentUser');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                return true;
+            }
+            return false;
+        }
+
+        function clearUserData() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('appointments');
+            currentUser = null;
+            appointments = [];
+        }
+
+        // Функции авторизации
+        function showAuthPage() {
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+        }
+
+        function hideAuthPage() {
+            document.getElementById('authPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+        }
+
+        function login(username, password) {
+            // В реальном приложении здесь должна быть проверка с сервером
+            // Для демо просто сохраняем пользователя
+            currentUser = {
+                username: username,
+                firstLetter: username.charAt(0).toUpperCase()
+            };
+            
+            saveUserData();
+            updateUIForUser();
+            hideAuthPage();
+        }
+
+        function register(username, password) {
+            // В реальном приложении здесь должна быть регистрация на сервере
+            // Для демо просто сохраняем пользователя
+            currentUser = {
+                username: username,
+                firstLetter: username.charAt(0).toUpperCase()
+            };
+            
+            saveUserData();
+            appointments = [];
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+            updateUIForUser();
+            hideAuthPage();
+        }
+
+        function logout() {
+            clearUserData();
+            showAuthPage();
+        }
+
+        function updateUIForUser() {
+            if (currentUser) {
+                // Обновляем аватарку
+                document.getElementById('profileBtn').textContent = currentUser.firstLetter;
+                document.getElementById('profileAvatar').textContent = currentUser.firstLetter;
+                document.getElementById('profileName').textContent = currentUser.username;
+            }
+        }
+
+        function checkAuth() {
+            if (loadUserData()) {
+                updateUIForUser();
+                hideAuthPage();
+                return true;
+            }
+            return false;
+        }
+
+        // Инициализация авторизации
+        document.addEventListener('DOMContentLoaded', function() {
+            // Настройка обработчиков для формы авторизации
+            const authPage = document.getElementById('authPage');
+            const authTitle = document.getElementById('authTitle');
+            const authButton = document.getElementById('authButton');
+            const authSwitch = document.getElementById('authSwitch');
+            const authName = document.getElementById('authName');
+            const authPassword = document.getElementById('authPassword');
+            
+            let isLoginMode = true;
+            
+            authButton.addEventListener('click', function() {
+                const username = authName.value.trim();
+                const password = authPassword.value.trim();
+                
+                if (!username || !password) {
+                    alert('Пожалуйста, заполните все поля');
+                    return;
+                }
+                
+                if (isLoginMode) {
+                    login(username, password);
+                } else {
+                    register(username, password);
+                }
+            });
+            
+            authSwitch.addEventListener('click', function() {
+                isLoginMode = !isLoginMode;
+                
+                if (isLoginMode) {
+                    authTitle.textContent = 'Вход в аккаунт';
+                    authButton.textContent = 'Войти';
+                    authSwitch.textContent = 'Создать аккаунт';
+                } else {
+                    authTitle.textContent = 'Регистрация';
+                    authButton.textContent = 'Зарегистрироваться';
+                    authSwitch.textContent = 'Уже есть аккаунт';
+                }
+            });
+            
+            // Обработчик выхода из аккаунта
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            
+            // Проверяем авторизацию при загрузке
+            if (!checkAuth()) {
+                showAuthPage();
+            }
+            
+            // Инициализация остального приложения
+            generateCards();
+            setupCategoryFilter();
+            updateAppointmentsList();
+            
+            // Update countdown every minute
+            setInterval(updateAppointmentsList, 60000);
+        });
+
+        // Initialize the map
         function initMap() {
             // Set initial view to Rostov-on-Don
             map = L.map('map', {
@@ -1782,16 +2066,6 @@
         
         closeModalBtn.addEventListener('click', closeBookingModal);
         confirmBookingBtn.addEventListener('click', confirmBooking);
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            generateCards();
-            setupCategoryFilter();
-            updateAppointmentsList();
-            
-            // Update countdown every minute
-            setInterval(updateAppointmentsList, 60000);
-        });
     </script>
 </body>
     </html>
